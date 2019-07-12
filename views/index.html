@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Assistant:200,300,400,600,700,800&amp;subset=hebrew"
+        rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <h5 id='error'></h5>
+    <div class="box">
+        <form id='form'>
+            <h1>New Task</h1>
+            <input name="taskName" type="text" placeholder="task name"><br /><br />
+            <textarea name="description" cols="30" rows="10" placeholder="description"></textarea><br />
+            <p class="error"></p>
+            <input type="submit" value="Create Task">
+        </form>
+    </div>
+    <div class="box">
+        <h1>To Do</h1>
+        <ul id="list">
+
+        </ul>
+    </div>
+    <script src="/script.js"></script>
+</body>
+
+</html>
