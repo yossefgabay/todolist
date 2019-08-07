@@ -1,9 +1,11 @@
 const mysql = require('mysql'),
+    database = "RcPHlnRJFY",
+    table = "tasks",
     con = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '123456',
-        database: "mydb"
+        host: 'remotemysql.com',
+        user: 'RcPHlnRJFY',
+        password: 'Rh4xmiw8Gi',
+        database
     })
 
 function query(sqlString) {
@@ -12,7 +14,7 @@ function query(sqlString) {
 
         con.query(sqlString, (err, result) => {
 
-            if (err) reject(err)
+            if (err) return reject(err.sqlMessage || err)
 
             resolve(result)
 
@@ -26,32 +28,32 @@ con.connect(async err => {
     if (err) throw err
     console.log('MySQL Connected!')
 
-    await query('CREATE DATABASE IF NOT EXISTS mydb')
+    await query(`CREATE DATABASE IF NOT EXISTS ${database}`)
 
-    await query('CREATE TABLE IF NOT EXISTS tasks (id INT, name VARCHAR(255), description VARCHAR(255), status VARCHAR(255) )')
+    await query(`CREATE TABLE IF NOT EXISTS ${table} (id VARCHAR(255), name VARCHAR(255), description VARCHAR(255), status VARCHAR(255) )`)
 
 })
 
 async function create(task) {
-    return query(`INSERT INTO tasks (id, name, description, status) VALUES ('${task.id}', '${task.name}', '${task.description}', 'new')`)
+    return query(`INSERT INTO ${table} (id, name, description, status) VALUES ('${task.id}', '${task.name}', '${task.description}', 'new')`)
 }
 
 async function read() {
-    return query(`SELECT * FROM tasks`)
+    return query(`SELECT * FROM ${table}`)
 }
 
 
 async function readOne(id) {
-    const res = await query(`SELECT * FROM tasks WHERE id='${id}'`)
+    const res = await query(`SELECT * FROM ${table} WHERE id='${id}'`)
     return res[0]
 }
 
 async function update(task) {
-    return query(`UPDATE tasks SET name='${task.name}', description='${task.description}', status='${task.status}' WHERE id='${task.id}'`)
+    return query(`UPDATE ${table} SET name='${task.name}', description='${task.description}', status='${task.status}' WHERE id='${task.id}'`)
 }
 
 async function del(id) {
-    return query(`DELETE FROM tasks WHERE id='${id}'`)
+    return query(`DELETE FROM ${table} WHERE id='${id}'`)
 }
 
 module.exports = { create, read, readOne, update, del }

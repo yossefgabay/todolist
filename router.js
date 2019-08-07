@@ -10,7 +10,7 @@ async function rest(collection, action, data, res) {
 
     } catch (error) {
 
-        res.send({ error: error.message || error })
+        result = { error: `${error.message || error}.` }
 
     }
 
